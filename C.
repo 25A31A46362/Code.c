@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Bus {
+    int busNo;
+    char route[30];
+    int totalSeats;
+    int availableSeats;
+};
+
+int main() {
+    struct Bus b[20];
+    int n = 0, choice, i, busNo, seats;
+
+    do {
+        printf("\n===== PRAGATI BUS MANAGEMENT SYSTEM =====\n");
+        printf("1. Add Bus Details\n");
+        printf("2. Display Bus Details\n");
+        printf("3. Book Seats\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+
+        case 1:
+            printf("\nEnter Bus Number: ");
+            scanf("%d", &b[n].busNo);
+            printf("Enter Route: ");
+            scanf("%s", b[n].route);
+            printf("Enter Total Seats: ");
+            scanf("%d", &b[n].totalSeats);
+            b[n].availableSeats = b[n].totalSeats;
+            n++;
+            printf("Bus added successfully!\n");
+            break;
+
+        case 2:
+            if (n == 0) {
+                printf("\nNo bus records available.\n");
+            } else {
+                printf("\n--- Bus Details ---\n");
+                for (i = 0; i < n; i++) {
+                    printf("\nBus No: %d", b[i].busNo);
+                    printf("\nRoute: %s", b[i].route);
+                    printf("\nTotal Seats: %d", b[i].totalSeats);
+                    printf("\nAvailable Seats: %d\n", b[i].availableSeats);
+                }
+            }
+            break;
+
+        case 3:
+            printf("\nEnter Bus Number: ");
+            scanf("%d", &busNo);
+            printf("Enter Number of Seats to Book: ");
+            scanf("%d", &seats);
+
+            for (i = 0; i < n; i++) {
+                if (b[i].busNo == busNo) {
+                    if (b[i].availableSeats >= seats) {
+                        b[i].availableSeats -= seats;
+                        printf("Seats booked successfully!\n");
+                    } else {
+                        printf("Not enough seats available.\n");
+                    }
+                    break;
+                }
+            }
+            if (i == n) {
+                printf("Bus not found.\n");
+            }
+            break;
+
+        case 4:
+            printf("Thank you for using Pragati Bus Management System.\n");
+            break;
+
+        default:
+            printf("Invalid choice! Try again.\n");
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
